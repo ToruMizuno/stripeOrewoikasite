@@ -1,0 +1,15 @@
+<div class="text-center">
+
+  <h1>月額課金を再開します</h1>
+
+  <ul>
+    <li>
+      <%# ボタンを作って、押したら"http://localhost:3000/home/restart_subscription"にアクセスする %>
+      <%# class: 'btn'でボタン化 %>
+      <%= button_to '月額課金再開', home_restart_subscription_path, method: :put, class: "btn btn-primary" %>
+      <%# <%= link_to "月額課金再開", home_restart_subscription_path, class: 'btn btn-default' %>
+    </li>
+  </ul>
+
+</div>
+

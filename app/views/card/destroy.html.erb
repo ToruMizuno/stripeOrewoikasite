@@ -1,0 +1,18 @@
+<div class="text-center">
+
+  <h1>月額課金をキャンセルします</h1>
+
+  <ul>
+    <li>
+      <%# ボタンを作って、押したら"http://localhost:3000/home/cancel_subscription"にアクセスする %>
+      <%# class: 'btn'でボタン化 %>
+      <%= button_to '月額課金キャンセル', home_cancel_subscription_path, method: :put, class: "btn btn-primary" %>
+      <%# <%= link_to "月額課金キャンセル", home_cancel_subscription_path, class: 'btn btn-default' %>
+    </li>
+  </ul>
+
+</div>
+
+
+
+

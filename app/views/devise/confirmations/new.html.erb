@@ -1,0 +1,23 @@
+<div class="text-center">
+
+  <h2>確認の指示を再送信</h2>
+
+  <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <%# フォームを真ん中にするbootstrapを適用 %>
+    <div class="form-group mx-auto" style="width: 400px;">
+      <%= f.label :email, class: "sr-only" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control", placeholder: "Email address" %>
+    </div>
+
+    <%# フォームを真ん中にするbootstrapを適用 %>
+    <div class="actions mx-auto" style="width: 400px;">
+      <%= f.submit "再送", class: "btn btn-lg btn-primary btn-block" %>
+    </div>
+  <% end %>
+
+  <%# _links.html.erbを表示 %>
+  <%= render "devise/shared/links" %>
+
+</div>

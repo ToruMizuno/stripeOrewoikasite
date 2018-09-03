@@ -1,0 +1,24 @@
+<div class="text-center">
+
+  <h2>ロック解除の指示を再送</h2>
+
+  <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+    <%= devise_error_messages! %>
+
+    <%# フォームを真ん中にするbootstrapを適用 %>
+    <div class="form-group mx-auto" style="width: 400px;">
+      <%= f.label :email, class: "sr-only" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email address" %>
+    </div>
+
+    <%# フォームを真ん中にするbootstrapを適用 %>
+    <div class="actions mx-auto" style="width: 400px;">
+      <%= f.submit "再送", class: "btn btn-lg btn-primary btn-block" %>
+    </div>
+  <% end %>
+
+  <%# _links.html.erbを表示 %>
+  <%= render "devise/shared/links" %>
+
+</div>
+

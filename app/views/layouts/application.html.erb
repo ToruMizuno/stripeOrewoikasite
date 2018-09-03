@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stripe1</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <header>
+      <%# bootstrapのナビゲーションバー %>
+      <nav class= "navbar navbar-expand-lg navbar-light bg-light" >
+        <a class= "navbar-brand" href= "/" > 俺を生かして！ </a>
+        <button class= "navbar-toggler" type= "button" data-toggle= "collapse" data-target= "#navbarText" aria-controls= "navbarText" aria-expanded= "false" aria-label= "Toggle navigation" >
+          <span class= "navbar-toggler-icon" ></span>
+        </button>
+        <div class= "collapse navbar-collapse" id= "navbarText" >
+          <ul class= "navbar-nav mr-auto" >
+            
+            <%# ログインしている場合 %>
+            <% if user_signed_in? %>
+              <li class= "nav-item" >
+                <%= link_to 'アカウント設定変更', edit_user_registration_path, class: "nav-link" %>
+              </li>
+              <li>
+                <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "nav-link" %>
+              </li class= "nav-item" >
+
+              <%# 自分のteamを呼び出す %>
+              <% team = Team.find_by(user_id: current_user.id) %>
+
+              <%# teamを持っていなかった場合 %>
+              <% if team == nil %>
+
+                <li class= "nav-item" >
+                  <%# カードを登録して月額課金を初めて開始するリンクを表示する(edit.html.erb) %>
+                  <%= link_to 'カード定期決済', card_edit_path, class: "nav-link" %>
+                </li>
+
+              <% end %>
+
+              <%# teamを持ってた場合 %>
+              <% if team != nil %>
+
+                <%# サブスクリプションIDがなかった場合 %>
+                <% if team.stripe_subscription_id == nil %>
+                  <li class= "nav-item" >
+                    <%# 月額課金を再開する画面へのリンクを表示(前回作ったteamを使ってサブスクリプションを作成させる)(restart.html.erb) %>
+                    <%= link_to 'カード定期再開', card_restart_path, class: "nav-link" %>
+                  </li>
+                <% end %>
+
+                <%# サブスクリプションIDがあった場合 %>
+                <% if team.stripe_subscription_id != nil %>
+                  <li class= "nav-item" >
+                    <%# 月額課金を終了する画面へのリンクを表示(destroy.html.erb) %>
+                    <%= link_to 'カード定期キャンセル', card_destroy_path, class: "nav-link" %>
+                  </li>
+                <% end %>
+
+              <% end %>
+
+            <%# ログアウトしている場合 %>
+            <% else %>
+              <li class= "nav-item" >
+                <%= link_to 'アカウント新規作成', new_user_registration_path, class: "nav-link" %>
+              </li>
+              <li class= "nav-item" >
+                <%= link_to 'ログイン', new_user_session_path, class: "nav-link" %>
+              </li>
+
+            <% end %>
+
+          </ul>
+
+          <%# 最後のリストにログインしているかしていないかを確認できるように表示を作る %>
+          <%# ログインしている場合 %>
+          <% if user_signed_in? %>
+            <span class= "navbar-text" > ログイン中 </span>
+          <%# ログアウトしている場合 %>
+          <% else %>
+            <span class= "navbar-text" > ログアウト中 </span>
+          <% end %>
+
+        </div>
+      </nav>
+
+    </header>
+    
+    <!--
+    
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+    
+    -->
+    
+   
+    <!-- 他のViewファイル(~~~.html.erb)が入るところ -->
+    <%= yield %>
+  </body>
+</html>
